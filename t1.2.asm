@@ -29,5 +29,15 @@
 
 
 	.data
+		Vetor_A .word 0 0 0 0 0 0 0 0
+		
+		msgInicial:	.asciz "Entre com o tamanho do vetor (max. = 8): "
+		msgInvalido:.asciz "Valor invalido.\n"
+		msgVetor1:	.asciz "Vetor_A["
+		msgVetor2:	.asciz "]: "
+		msgIndice:	.asciz "Digite o indice do valor a ser impresso: "
+		msgFinal1:	.asciz "O elemento do vetor na posicao "
+		msgFinal2: 	.asciz " possui o valor "
+
 	.text
 main:
