@@ -47,6 +47,11 @@
 #### TODO: Mensagem de "valor invalido"###
 ##########################################
 while:
+	# Se t2 != 0 entra sigifnica que o processo ja foi percorrido, logo
+	# sera printada a mensagem de "valor invalido"
+	
+	
+	mv t2, zero			# zera o t2
 	addi t0, zero, 8 	# t0 = 8 (limite de posicoes)
 	li a7, 4			# a7 = codigo para printar string
 	la a0, msgInicial	# a0 = msgInicial (endereco)
@@ -101,12 +106,21 @@ loop:
 ###############################
 ### TODO: Testes de entrada ###
 ##############################
+indexInput:
 	li a7, 4				# carrega o codigo para printar string
 	la a0, msgIndice		# a0 = msgIndice
 	ecall					# printa "Digite o indice do valor a ser impresso: "
 	li a7, 5				# carrega o codigo para ler inteiro
 	ecall					# chamada para ler um inteiro
 	mv s1, a0				# s1 = a0 (s1 recebe o indice logico)
+	
+	# Prmeiro teste: tamanho < 0?
+	slti t1, a0, 0 			# t1 = (size < 2)
+	bne t1, zero, indexInput	# se (size < 2) vai para while
+	# Segundo teste: tamanho > size?
+	addi t2, zero, 1
+	sub t1, s2, t2
+	bgt a0, t1, indexInput	# se (i > 8) vai para while
 	#---------------------------- Mostra o elemento do vetor -----------------------#
 	li a7, 4				# carrega o codigo para printar string
 	la a0, msgFinal1		# a0 = msgFinal1
