@@ -42,7 +42,6 @@
 	.text
 #---------------- Loop While para inserir a quantidade de elementos ------------------#
 while:
-	la s5, while		# s5 = endereco de while
 	addi t0, zero, 8 	# t0 = 8 (limite de posicoes)
 	li a7, 4			# a7 = carrega o codigo para printar string
 	la a0, msgInicial	# a0 = msgInicial (endereco)
@@ -54,8 +53,7 @@ while:
 	jal validateSize	# pula para a funcao que testa se o valor inserido é valido
 						# e salva a posicao atual
 	
-	# Caso o valor seja valido (1 < a0 <= 8)
-	mv s2, a0			# s2 = a0 (s2 = size)
+	# Caso o valor seja valido (1 < a0 <= 8), o sistema continua
 
 #--------------------- Declaracoes antes de entrar no loop -----------------------------#
 	# s0 = endereco do array
@@ -66,6 +64,7 @@ while:
 
 	la s0, Vetor_A		# s0 = Vetor_A (endereco)
 	mv s1, zero			# inicializa o deslocamento (i = 0)
+	mv s2, a0			# s2 = a0 (s2 = size)
 
 loop:
 	slli s3, s1, 2			# s3 = i * 4 (indice fisico)
@@ -82,7 +81,7 @@ loop:
 	ecall					# printa "] = "
 	li a7, 5				# chama o codigo para ler um inteiro
 	ecall					# chamada para o usuario entrar com um input (inteiro)
-	#-------------------------------------------------------------------------------- #	
+	#--------------------------------------------------------------------------------- #	
 	sw a0, 0(s4)			# a0 = valor armazenado atraves do input vindo pelo ecall
 							# s4 = Vetor_A[i], logo, Vetor_A[i] = a0
 							
@@ -92,7 +91,6 @@ loop:
 
 # ----------------- Pede o indice do elemento que sera impresso ----------------- #
 indexInput:
-	la s6, indexInput
 	li a7, 4				# carrega o codigo para printar string
 	la a0, msgIndice		# a0 = msgIndice
 	ecall					# printa "Digite o indice do valor a ser impresso: "
@@ -132,7 +130,6 @@ validateSize:
 	blt a0, t1, printError	# se (a0 < 2) printa mensagem de erro e repete o while
 	# Segundo teste: tamanho > 8?
 	bgt a0, t0, printError	# se (a0 > 8) mostra mensagem de erro e repete o while
-	
 	jr ra					# Se o valor for valido, volta para a posicao que foi
 							# salva antes de vir para o teste de entrada
 							
